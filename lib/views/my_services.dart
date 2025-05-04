@@ -21,7 +21,6 @@ class _MyServicesState extends State<MyServices> {
   final onHoverActive = Matrix4.identity()..translate(0, -10, 0);
   final onHoverRemove = Matrix4.identity()..translate(0, 0, 0);
 
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -53,8 +52,8 @@ class _MyServicesState extends State<MyServices> {
               });
             },
             child: buildAnimatedContainer(
-              title: 'Graphic Designing',
-              asset: AppAssets.brush,
+              title: 'Web Development and Hosting',
+              asset: AppAssets.code,
               hover: isGraphic,
             ),
           ),
@@ -67,7 +66,7 @@ class _MyServicesState extends State<MyServices> {
               });
             },
             child: buildAnimatedContainer(
-              title: 'Digital Marketing',
+              title: 'IT Support Services',
               asset: AppAssets.analyst,
               hover: isDataAnalyst,
             ),
@@ -104,8 +103,8 @@ class _MyServicesState extends State<MyServices> {
                   });
                 },
                 child: buildAnimatedContainer(
-                  title: 'Graphic Designing',
-                  asset: AppAssets.brush,
+                  title: 'Web Development and Hosting',
+                  asset: AppAssets.code,
                   hover: isGraphic,
                 ),
               ),
@@ -120,7 +119,7 @@ class _MyServicesState extends State<MyServices> {
               });
             },
             child: buildAnimatedContainer(
-              title: 'Digital Marketing',
+              title: 'IT Support Services',
               asset: AppAssets.analyst,
               hover: isDataAnalyst,
               width: 725.0,
@@ -159,8 +158,8 @@ class _MyServicesState extends State<MyServices> {
                   });
                 },
                 child: buildAnimatedContainer(
-                  title: 'Graphic Designing',
-                  asset: AppAssets.brush,
+                  title: 'Web Development and Hosting',
+                  asset: AppAssets.code,
                   hover: isGraphic,
                 ),
               ),
@@ -173,7 +172,7 @@ class _MyServicesState extends State<MyServices> {
                   });
                 },
                 child: buildAnimatedContainer(
-                  title: 'Digital Marketing',
+                  title: 'IT Support Services',
                   asset: AppAssets.analyst,
                   hover: isDataAnalyst,
                 ),
@@ -213,6 +212,19 @@ class _MyServicesState extends State<MyServices> {
     double width = 350,
     double hoverWidth = 360,
   }) {
+    String description = '';
+    if (title == 'Web Development and Hosting') {
+      description =
+          'تصميم وبرمجة مواقع احترافية متوافقة مع جميع الأجهزة، مع استضافة آمنة وسريعة ودعم فني مستمر.';
+    } else if (title == 'IT Support Services') {
+      description =
+          'خدمات دعم فني متكاملة للشركات والأفراد، حلول مشاكل الشبكات، الحماية، الصيانة، والاستشارات التقنية.';
+    } else if (title == 'App Development') {
+      description =
+          'تطوير تطبيقات موبايل عالية الجودة باستخدام Flutter مع واجهات استخدام عصرية وسهلة.';
+    } else {
+      description = 'خدمة مميزة تلبي احتياجاتك التقنية.';
+    }
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       width: hover ? hoverWidth : width,
@@ -250,8 +262,7 @@ class _MyServicesState extends State<MyServices> {
           ),
           Constants.sizedBox(height: 12.0),
           Text(
-            'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.'
-            ' The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,',
+            description,
             style: AppTextStyles.normalStyle(fontSize: 14.0),
             textAlign: TextAlign.center,
           ),
