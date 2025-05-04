@@ -8,6 +8,7 @@ import 'package:my_portfolio/globals/app_text_styles.dart';
 import 'package:my_portfolio/globals/constants.dart';
 import 'package:my_portfolio/helper%20class/helper_class.dart';
 import 'package:my_portfolio/widgets/profile_animation.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,6 +24,14 @@ class _HomePageState extends State<HomePage> {
     AppAssets.linkedIn,
     AppAssets.insta,
     AppAssets.github,
+  ];
+
+  final socialLinks = <String>[
+    'https://facebook.com/',
+    'https://twitter.com/',
+    'https://www.linkedin.com/',
+    'https://instagram.com/',
+    'https://github.com/',
   ];
 
   int? socialBI;
@@ -131,24 +140,10 @@ class _HomePageState extends State<HomePage> {
               separatorBuilder: (context, child) =>
                   Constants.sizedBox(width: 8.0),
               itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {},
-                  onHover: (value) {
-                    setState(() {
-                      if (value) {
-                        socialBI = index;
-                      } else {
-                        socialBI = null;
-                      }
-                    });
-                  },
-                  borderRadius: BorderRadius.circular(550.0),
-                  hoverColor: AppColors.themeColor,
-                  splashColor: AppColors.lawGreen,
-                  child: buildSocialButton(
-                      asset: socialButtons[index],
-                      hover: socialBI == index ? true : false),
-                );
+                return buildSocialButton(
+                    asset: socialButtons[index],
+                    hover: socialBI == index ? true : false,
+                    index: index);
               },
             ),
           ),
@@ -163,7 +158,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Ink buildSocialButton({required String asset, required bool hover}) {
+  Widget buildSocialButton({required String asset, required bool hover, required int index}) {
     return Ink(
       width: 45,
       height: 45,
@@ -173,12 +168,22 @@ class _HomePageState extends State<HomePage> {
         shape: BoxShape.circle,
       ),
       padding: const EdgeInsets.all(6),
-      child: Image.asset(
-        asset,
-        width: 10,
-        height: 12,
-        color: hover ? AppColors.bgColor : AppColors.themeColor,
-        // fit: BoxFit.fill,
+      child: InkWell(
+        onTap: () async {
+          final url = Uri.parse(socialLinks[index]);
+          if (await canLaunchUrl(url)) {
+            await launchUrl(url);
+          }
+        },
+        borderRadius: BorderRadius.circular(550.0),
+        hoverColor: AppColors.themeColor,
+        splashColor: AppColors.lawGreen,
+        child: Image.asset(
+          asset,
+          width: 10,
+          height: 12,
+          color: hover ? AppColors.bgColor : AppColors.themeColor,
+        ),
       ),
     );
   }
