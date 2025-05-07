@@ -5,6 +5,7 @@ import 'package:my_portfolio/views/footer_class.dart';
 import 'package:my_portfolio/views/home_page.dart';
 import 'package:my_portfolio/views/my_portfolio.dart';
 import 'package:my_portfolio/views/my_services.dart';
+import 'package:my_portfolio/views/work_experience.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../globals/app_colors.dart';
 import '../globals/app_text_styles.dart';
@@ -29,6 +30,7 @@ class MainDashBoardState extends State<MainDashBoard> {
     'About',
     'Services',
     'Portfolio',
+    'Experience',
     'Contact',
   ];
 
@@ -39,6 +41,7 @@ class MainDashBoardState extends State<MainDashBoard> {
     AboutMe(),
     MyServices(),
     MyPortfolio(),
+    WorkExperience(),
     ContactUs(),
     FooterClass(),
   ];
@@ -70,35 +73,58 @@ class MainDashBoardState extends State<MainDashBoard> {
         elevation: 0,
         title: LayoutBuilder(
           builder: (context, constraints) {
-            if (constraints.maxWidth < 768) {
+            if (constraints.maxWidth < 600) {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const Text('Portfolio'),
+                  Text(
+                    'Portfolio',
+                    style: AppTextStyles.montserratStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ),
                   const Spacer(),
-                  PopupMenuButton(
+                  IconButton(
                     icon: Icon(
                       Icons.menu_sharp,
                       size: 32,
                       color: AppColors.white,
                     ),
-                    color: AppColors.bgColor2,
-                    position: PopupMenuPosition.under,
-                    constraints:
-                        BoxConstraints.tightFor(width: size.width * 0.9),
-                    itemBuilder: (BuildContext context) => menuItems
-                        .asMap()
-                        .entries
-                        .map(
-                          (e) => PopupMenuItem(
-                            textStyle: AppTextStyles.headerTextStyle(),
-                            onTap: () {
-                              scrollTo(index: e.key);
-                            },
-                            child: Text(e.value),
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        backgroundColor: AppColors.bgColor2,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20),
                           ),
-                        )
-                        .toList(),
+                        ),
+                        builder: (context) => Container(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: menuItems
+                                .asMap()
+                                .entries
+                                .map(
+                                  (e) => ListTile(
+                                    title: Text(
+                                      e.value,
+                                      style: AppTextStyles.headerTextStyle(),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      scrollTo(index: e.key);
+                                    },
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               );
@@ -106,7 +132,13 @@ class MainDashBoardState extends State<MainDashBoard> {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const Text('Portfolio'),
+                  Text(
+                    'Portfolio',
+                    style: AppTextStyles.montserratStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ),
                   const Spacer(),
                   SizedBox(
                     height: 30,

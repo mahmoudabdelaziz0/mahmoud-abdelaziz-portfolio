@@ -27,14 +27,30 @@ class _HomePageState extends State<HomePage> {
   ];
 
   final socialLinks = <String>[
-    'https://facebook.com/',
-    'https://twitter.com/',
-    'https://www.linkedin.com/',
-    'https://instagram.com/',
-    'https://github.com/',
+    'https://www.facebook.com/profile.php?id=100013436375813',
+    'https://x.com/mahmoudzizo_',
+    'https://linkedin.com/in/mahmoud-abdelaziz-0a67a6202',
+    'https://www.instagram.com/mahmoud.abdellaziiz/',
+    'https://github.com/mahmoudabdelaziz0',
   ];
 
   int? socialBI;
+  bool isDownloading = false;
+
+  void downloadCV() async {
+    const url =
+        'https://drive.google.com/file/d/1rq8jsWO3y0EDRjqoyf6PigO2eBHNWDnI/view?usp=sharing';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Could not open CV'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,11 +137,9 @@ class _HomePageState extends State<HomePage> {
         Constants.sizedBox(height: 15.0),
         FadeInDown(
           duration: const Duration(milliseconds: 1600),
-          child: Expanded(
-            child: Text(
-              'I\'m a Flutter Developer with hands-on experience in mobile app development and UI/UX implementation. Currently working as an IT Specialist, which has enhanced my understanding of real-world systems and backend infrastructure. I build clean, responsive apps using Flutter, with knowledge in Firebase, SQLite, APIs, and Git.',
-              style: AppTextStyles.normalStyle(),
-            ),
+          child: Text(
+            'I am a Software Developer specialized in Flutter. I have hands-on experience in developing modern mobile applications and user interfaces. My background as an IT Specialist has given me strong knowledge in networks and cloud infrastructure. I excel at building clean, fast, and scalable apps using Flutter',
+            style: AppTextStyles.normalStyle(),
           ),
         ),
         Constants.sizedBox(height: 22.0),
@@ -152,13 +166,14 @@ class _HomePageState extends State<HomePage> {
         FadeInUp(
           duration: const Duration(milliseconds: 1800),
           child: AppButtons.buildMaterialButton(
-              onTap: () {}, buttonName: 'Download CV'),
+              onTap: downloadCV, buttonName: 'Download CV'),
         ),
       ],
     );
   }
 
-  Widget buildSocialButton({required String asset, required bool hover, required int index}) {
+  Widget buildSocialButton(
+      {required String asset, required bool hover, required int index}) {
     return Ink(
       width: 45,
       height: 45,
@@ -170,9 +185,28 @@ class _HomePageState extends State<HomePage> {
       padding: const EdgeInsets.all(6),
       child: InkWell(
         onTap: () async {
-          final url = Uri.parse(socialLinks[index]);
-          if (await canLaunchUrl(url)) {
-            await launchUrl(url);
+          try {
+            final url = Uri.parse(socialLinks[index]);
+            if (await canLaunchUrl(url)) {
+              await launchUrl(
+                url,
+                mode: LaunchMode.externalApplication,
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Could not open ${socialLinks[index]}'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          } catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Error: $e'),
+                backgroundColor: Colors.red,
+              ),
+            );
           }
         },
         borderRadius: BorderRadius.circular(550.0),

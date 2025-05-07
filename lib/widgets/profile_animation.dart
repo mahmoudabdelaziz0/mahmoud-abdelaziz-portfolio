@@ -38,9 +38,15 @@ class ProfileAnimationState extends State<ProfileAnimation>
       child: ClipOval(
         child: Image.asset(
           AppAssets.profile1,
-          width: 340,
-          height: 340,
+          width: 330,
+          height: 330,
           fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) => Container(
+            width: 290,
+            height: 290,
+            color: Colors.grey[300],
+            child: const Icon(Icons.error, size: 40, color: Colors.red),
+          ),
         ),
       ),
     );

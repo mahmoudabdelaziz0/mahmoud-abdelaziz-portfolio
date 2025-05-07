@@ -247,6 +247,7 @@ class _MyServicesState extends State<MyServices> {
         ],
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
             asset,
@@ -259,12 +260,15 @@ class _MyServicesState extends State<MyServices> {
             title,
             style: AppTextStyles.montserratStyle(
                 color: Colors.white, fontSize: 22.0),
+            textAlign: TextAlign.center,
           ),
           Constants.sizedBox(height: 12.0),
           Text(
             description,
             style: AppTextStyles.normalStyle(fontSize: 14.0),
             textAlign: TextAlign.center,
+            maxLines: 4,
+            overflow: TextOverflow.ellipsis,
           ),
           Constants.sizedBox(height: 20.0),
           AppButtons.buildMaterialButton(buttonName: 'Read More', onTap: () {})

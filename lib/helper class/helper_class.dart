@@ -20,34 +20,31 @@ class HelperClass extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth < 768) {
+        if (constraints.maxWidth < 600) {
           return Container(
-            // height: size.height,
             width: size.width,
             alignment: Alignment.center,
             color: bgColor,
             padding: EdgeInsets.symmetric(
-                vertical: size.height * 0.05, horizontal: 18),
+                vertical: size.height * 0.03, horizontal: 16),
             child: mobile,
           );
-        } else if (constraints.maxWidth < 1200) {
+        } else if (constraints.maxWidth < 900) {
           return Container(
-            // height: size.height,
+            width: size.width,
+            alignment: Alignment.center,
+            color: bgColor,
+            padding: EdgeInsets.symmetric(
+                vertical: size.height * 0.05, horizontal: paddingWidth),
+            child: tablet,
+          );
+        } else {
+          return Container(
             width: size.width,
             alignment: Alignment.center,
             color: bgColor,
             padding: EdgeInsets.symmetric(
                 vertical: size.height * 0.1, horizontal: paddingWidth),
-            child: tablet,
-          );
-        } else {
-          return Container(
-            // height: size.height,
-            width: size.width,
-            alignment: Alignment.center,
-            color: bgColor,
-            padding: EdgeInsets.symmetric(
-                vertical: size.height * 0.18, horizontal: paddingWidth),
             child: desktop,
           );
         }
